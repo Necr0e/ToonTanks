@@ -17,8 +17,6 @@ ABasePawn::ABasePawn()
 	TurretMesh->SetupAttachment(BaseMesh);
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Projecilte Spawn Location"));
 	ProjectileSpawnPoint->SetupAttachment(TurretMesh);
-
-	MoveSpeed = 50.f;
 }
 
 // Called when the game starts or when spawned

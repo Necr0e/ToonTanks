@@ -37,7 +37,4 @@ private:
 	TObjectPtr<UStaticMeshComponent> TurretMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> ProjectileSpawnPoint;
-
-	UPROPERTY(EditAnywhere)
-	float MoveSpeed;
 };
