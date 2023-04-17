@@ -1,5 +1,3 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
 
 #include "PlayerTank.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -15,14 +13,28 @@ APlayerTank::APlayerTank()
 	Camera->SetupAttachment(SpringArm);
 
 	MoveSpeed = 200.f;
+	TurnSpeed = 20.f;
 }
 
 void APlayerTank::BeginPlay()
 {
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
-	if (APlayerController* PlayerController = Cast<APlayerController>(GetController()))
+	PlayerController = Cast<APlayerController>(GetController());
+	if (PlayerController)
 		if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer()))
 			Subsystem->AddMappingContext(TankMappingContext, 0);
+
+	
+}
+
+void APlayerTank::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (PlayerController)
+	{
+		
+	}
 }
 
 void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -36,6 +48,14 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		{
 			PIC->BindAction(MovementAction, ETriggerEvent::Triggered, this, &APlayerTank::MoveForwardBack);
 		}
+		if (TurnAction)
+		{
+			PIC->BindAction(TurnAction, ETriggerEvent::Triggered, this, &APlayerTank::TankTurn);
+		}
+		if (LookAction)
+		{
+			PIC->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerTank::TankLook);
+		}
 	}
 }
 
@@ -43,17 +63,21 @@ void APlayerTank::MoveForwardBack(const FInputActionValue& Value)
 {
 	FVector DeltaLocation = FVector::ZeroVector;
 	DeltaLocation.X = Value.Get<float>() * MoveSpeed * UGameplayStatics::GetWorldDeltaSeconds(this);
-	AddActorLocalOffset(DeltaLocation);
+	AddActorLocalOffset(DeltaLocation, true);
 }
 
 void APlayerTank::TankLook(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Move Forward"));
+	FHitResult HitResult;
+	PlayerController->GetHitResultUnderCursor(ECC_Visibility, false, HitResult);
+	RotateTurret(HitResult.ImpactPoint);
 }
 
 void APlayerTank::TankTurn(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Turn"));
+	FRotator DeltaRotation = FRotator::ZeroRotator;
+	DeltaRotation.Yaw = Value.Get<float>() * TurnSpeed * UGameplayStatics::GetWorldDeltaSeconds(this);
+	AddActorLocalRotation(DeltaRotation, true);
 }
 
 void APlayerTank::TankShoot(const FInputActionValue& Value)

@@ -21,6 +21,8 @@ class TOONTANKS_API APlayerTank : public ABasePawn
 public:
 	APlayerTank();
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void Tick(float DeltaTime) override;
+
 
 protected:
 	virtual void BeginPlay() override;
@@ -44,6 +46,11 @@ private:
 	TObjectPtr<USpringArmComponent> SpringArm;
 	UPROPERTY(EditAnywhere, Category= "Movement")
 	float MoveSpeed;
+	UPROPERTY(EditAnywhere, Category= "Movement")
+	float TurnSpeed;
+
+	UPROPERTY()
+	TObjectPtr<APlayerController> PlayerController;
 	
 	void TankShoot(const FInputActionValue& Value);
 	void MoveForwardBack(const FInputActionValue& Value);
