@@ -7,6 +7,7 @@
 #include "BasePawn.generated.h"
 
 class UCapsuleComponent;
+class AProjectileBase;
 
 UCLASS()
 class TOONTANKS_API ABasePawn : public APawn
@@ -30,5 +31,5 @@ private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> ProjectileSpawnPoint;
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
-	TSubclassOf<class AProjectileBase> ProjectileClass;
+	TSubclassOf<AProjectileBase> ProjectileClass;
 };

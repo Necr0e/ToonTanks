@@ -14,6 +14,7 @@ class TOONTANKS_API UHealthComponent : public UActorComponent
 
 public:	
 	UHealthComponent();
+	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
 
 protected:
 	virtual void BeginPlay() override;
@@ -21,9 +22,9 @@ protected:
 private:
 	UPROPERTY(EditAnywhere)
 	float MaxHealth;
-	float CurrHealth;
+	float Health;
 
 	UFUNCTION()
-	void DamageTaken(AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* Instigator, AActor* DamageCauser);
+	void DamageTaken(AActor *DamagedActor, float Damage, const UDamageType *DamageType, class AController *Instigator, AActor *DamageCauser);
 		
 };
