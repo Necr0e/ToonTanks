@@ -16,8 +16,10 @@ class TOONTANKS_API ABasePawn : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ABasePawn();
+	
 protected:
 	void RotateTurret(FVector LookAtTarget);
+	void Fire();
 private:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<UCapsuleComponent> CollisionComponent;
@@ -27,4 +29,6 @@ private:
 	TObjectPtr<UStaticMeshComponent> TurretMesh;
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
 	TObjectPtr<USceneComponent> ProjectileSpawnPoint;
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	TSubclassOf<class AProjectileBase> ProjectileClass;
 };

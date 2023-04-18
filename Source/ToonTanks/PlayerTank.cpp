@@ -30,11 +30,6 @@ void APlayerTank::BeginPlay()
 void APlayerTank::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	if (PlayerController)
-	{
-		
-	}
 }
 
 void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -55,6 +50,10 @@ void APlayerTank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 		if (LookAction)
 		{
 			PIC->BindAction(LookAction, ETriggerEvent::Triggered, this, &APlayerTank::TankLook);
+		}
+		if (ShootAction)
+		{
+			PIC->BindAction(ShootAction, ETriggerEvent::Completed, this, &APlayerTank::TankShoot);
 		}
 	}
 }
@@ -83,6 +82,7 @@ void APlayerTank::TankTurn(const FInputActionValue& Value)
 void APlayerTank::TankShoot(const FInputActionValue& Value)
 {
 	UE_LOG(LogTemp, Warning, TEXT("PEW!"));
+	Fire();
 }
 
 
