@@ -81,7 +81,6 @@ void APlayerTank::TankTurn(const FInputActionValue& Value)
 
 void APlayerTank::TankShoot(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("PEW!"));
 	Fire();
 }
 
